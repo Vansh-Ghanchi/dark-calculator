@@ -2,10 +2,10 @@
 A clean, high-end, responsive web-based calculator project featuring modern design principles. This project showcases a sleek dark-mode interface with glassmorphism effects, interactive elements, and a dynamic animated background.
 
 ## 🔗 Live Preview
-Experience the full interactivity here: [Live Demo](https://vansh-ghanchi.github.io/dark-calculator/)
+Experience the full interactivity here: [Live Demo](https://Vansh-Ghanchi.github.io/dark-calculator/)
 
 ## 📸 Ghanchi Vansh's Project Preview
-![Calcify Preview](https://raw.githubusercontent.com/Vansh-Ghanchi/dark-calculator/main/preview.png)
+![Calcify Preview](./preview.png)
 
 ## 🛠️ Tech Stack
 This project is built using pure, high-performance web technologies:
