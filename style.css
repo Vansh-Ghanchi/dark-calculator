@@ -32,9 +32,9 @@
     --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
     /* Spacing */
-    --radius-card: 28px;
-    --radius-btn: 16px;
-    --gap: 10px;
+    --radius-card: 32px;
+    --radius-btn: 18px;
+    --gap: 14px;
 
     /* Shadows */
     --shadow-card:
@@ -146,20 +146,20 @@ body {
     z-index: 1;
     display: flex;
     align-items: flex-start;
-    gap: 14px;
-    padding: 20px;
+    gap: 20px;
+    padding: 32px;
 }
 
 /* ── History Panel ─────────────────────────────────────────── */
 .history-panel {
-    width: 230px;
-    max-height: 580px;
+    width: 260px;
+    max-height: 620px;
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-card);
-    padding: 20px 16px;
+    padding: 24px 20px;
     display: flex;
     flex-direction: column;
     gap: 14px;
@@ -217,7 +217,7 @@ body {
     flex-direction: column;
     gap: 6px;
     overflow-y: auto;
-    max-height: 480px;
+    max-height: 520px;
     padding-right: 4px;
     scrollbar-width: thin;
     scrollbar-color: var(--surface-3) transparent;
@@ -291,7 +291,7 @@ body {
 
 /* ── Calculator Card ───────────────────────────────────────── */
 .calculator-card {
-    width: 352px;
+    width: 384px;
     border-radius: var(--radius-card);
     overflow: hidden;
     background: rgba(14, 14, 36, 0.75);
@@ -319,7 +319,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 14px 20px 0;
+    padding: 24px 28px 0;
 }
 
 .calc-brand {
@@ -370,7 +370,7 @@ body {
 
 /* ── Display ───────────────────────────────────────────────── */
 .display {
-    padding: 20px 24px 16px;
+    padding: 28px 32px 24px;
     text-align: right;
     border-bottom: 1px solid var(--border-subtle);
     min-height: 118px;
@@ -437,7 +437,7 @@ body {
 .buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    padding: 12px 14px 18px;
+    padding: 16px 20px 24px;
     gap: var(--gap);
 }
 
@@ -450,7 +450,7 @@ body {
     font-family: var(--font-ui);
     font-size: 1.1rem;
     font-weight: 500;
-    height: 68px;
+    height: 72px;
     position: relative;
     overflow: hidden;
     letter-spacing: 0px;
@@ -652,7 +652,7 @@ body {
     .history-panel {
         width: 100%;
         max-width: 352px;
-        max-height: 200px;
+        max-height: 240px;
         transform: translateY(-12px) scale(0.97);
     }
 
@@ -664,7 +664,7 @@ body {
 @media (max-width: 400px) {
     .calculator-card {
         width: 100%;
-        border-radius: 20px;
+        border-radius: 24px;
     }
 
     .btn {

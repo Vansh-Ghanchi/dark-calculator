@@ -1,6 +1,6 @@
 # 🧮 2026 Premium Interactive Calculator
 A clean, high-end, responsive web-based calculator project featuring modern design principles. This project showcases a sleek dark-mode interface with glassmorphism effects, interactive elements, and a dynamic animated background.
-
+You can see is show like a small calculator fix this and generate i image exact like that
 ## 🔗 Live Preview
 Experience the full interactivity here: [Live Demo](https://Vansh-Ghanchi.github.io/dark-calculator/)
 
