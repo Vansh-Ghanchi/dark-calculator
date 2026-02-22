@@ -1,180 +1,589 @@
-/* basic reset so nothing looks weird by default */
-* {
+/* ============================================================
+   CALCIFY — Premium Calculator Stylesheet
+   Design System: Deep Space Dark + Violet Accent
+   ============================================================ */
+
+/* ── Design Tokens ─────────────────────────────────────────── */
+:root {
+    /* Colors */
+    --bg-deep: #080812;
+    --bg-mid: #0d0d1e;
+    --surface-1: rgba(255, 255, 255, 0.04);
+    --surface-2: rgba(255, 255, 255, 0.07);
+    --surface-3: rgba(255, 255, 255, 0.12);
+    --border-subtle: rgba(255, 255, 255, 0.07);
+    --border-mid: rgba(255, 255, 255, 0.12);
+
+    --accent-primary: #7c3aed;
+    --accent-mid: #8b5cf6;
+    --accent-light: #a78bfa;
+    --accent-glow: rgba(124, 58, 237, 0.45);
+
+    --red: #ef4444;
+    --red-soft: #f87171;
+    --red-glow: rgba(239, 68, 68, 0.3);
+
+    --text-primary: #f1f0fb;
+    --text-secondary: rgba(167, 139, 250, 0.8);
+    --text-muted: rgba(255, 255, 255, 0.3);
+
+    /* Typography */
+    --font-ui: 'Inter', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+    /* Spacing */
+    --radius-card: 28px;
+    --radius-btn: 16px;
+    --gap: 10px;
+
+    /* Shadows */
+    --shadow-card:
+        0 40px 80px rgba(0, 0, 0, 0.7),
+        0 0 0 1px rgba(255, 255, 255, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.09);
+    --shadow-btn-hover: 0 6px 18px rgba(0, 0, 0, 0.35);
+
+    /* Transitions */
+    --ease-snap: cubic-bezier(0.34, 1.4, 0.64, 1);
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Reset ─────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'Inter', sans-serif;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+/* ── Base ──────────────────────────────────────────────────── */
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-/* centers the calculator on the page */
-.calculator-wrapper {
+body {
+    font-family: var(--font-ui);
+    min-height: 100vh;
+    background: var(--bg-deep);
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* ── Animated Background Orbs ─────────────────────────────── */
+.bg-orbs {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.55;
+    animation: orbFloat 12s ease-in-out infinite;
+}
+
+.orb-1 {
+    width: 520px;
+    height: 520px;
+    background: radial-gradient(circle, #6d28d9 0%, transparent 70%);
+    top: -18%;
+    left: -12%;
+    animation-delay: 0s;
+    animation-duration: 14s;
+}
+
+.orb-2 {
+    width: 380px;
+    height: 380px;
+    background: radial-gradient(circle, #1d4ed8 0%, transparent 70%);
+    bottom: -15%;
+    right: -10%;
+    animation-delay: -5s;
+    animation-duration: 16s;
+    opacity: 0.4;
+}
+
+.orb-3 {
+    width: 260px;
+    height: 260px;
+    background: radial-gradient(circle, #0ea5e9 0%, transparent 70%);
+    top: 50%;
+    left: 60%;
+    animation-delay: -9s;
+    animation-duration: 18s;
+    opacity: 0.25;
+}
+
+@keyframes orbFloat {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    33% {
+        transform: translate(30px, -25px) scale(1.05);
+    }
+
+    66% {
+        transform: translate(-20px, 20px) scale(0.97);
+    }
+}
+
+/* ── App Shell ─────────────────────────────────────────────── */
+.app-shell {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
     padding: 20px;
 }
 
-/* the main calculator card */
-.calculator {
-    width: 340px;
-    border-radius: 24px;
+/* ── History Panel ─────────────────────────────────────────── */
+.history-panel {
+    width: 230px;
+    max-height: 580px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-card);
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
     overflow: hidden;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow:
-        0 25px 50px rgba(0, 0, 0, 0.5),
-        0 0 0 1px rgba(255, 255, 255, 0.05),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+
+    /* hidden by default, shown via class */
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-16px) scale(0.97);
+    transition: opacity 0.3s var(--ease-out), transform 0.3s var(--ease-out);
 }
 
-/* the screen area */
+.history-panel.visible {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateX(0) scale(1);
+}
+
+.history-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.history-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.history-clear-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    padding: 4px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s, background 0.2s;
+}
+
+.history-clear-btn:hover {
+    color: var(--red-soft);
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.history-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    overflow-y: auto;
+    max-height: 480px;
+    padding-right: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--surface-3) transparent;
+}
+
+.history-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.history-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.history-list::-webkit-scrollbar-thumb {
+    background: var(--surface-3);
+    border-radius: 4px;
+}
+
+.history-empty {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 20px 0;
+    font-style: italic;
+}
+
+.history-item {
+    background: var(--surface-1);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: background 0.18s, border-color 0.18s, transform 0.18s var(--ease-snap);
+    animation: historySlideIn 0.3s var(--ease-out) both;
+}
+
+.history-item:hover {
+    background: var(--surface-2);
+    border-color: rgba(167, 139, 250, 0.25);
+    transform: translateX(2px);
+}
+
+@keyframes historySlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.history-expr {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 3px;
+}
+
+.history-answer {
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    color: var(--accent-light);
+}
+
+/* ── Calculator Card ───────────────────────────────────────── */
+.calculator-card {
+    width: 352px;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    background: rgba(14, 14, 36, 0.75);
+    backdrop-filter: blur(40px) saturate(1.4);
+    -webkit-backdrop-filter: blur(40px) saturate(1.4);
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-card);
+    position: relative;
+}
+
+/* subtle top-edge highlight */
+.calculator-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 20%;
+    right: 20%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.5), transparent);
+    pointer-events: none;
+}
+
+/* ── Calc Header ───────────────────────────────────────────── */
+.calc-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px 0;
+}
+
+.calc-brand {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, var(--accent-light), #c4b5fd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    user-select: none;
+}
+
+.history-toggle-btn {
+    background: var(--surface-1);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.65rem;
+    font-family: var(--font-ui);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+}
+
+.history-toggle-btn::after {
+    content: 'History';
+    color: var(--text-muted);
+}
+
+.history-toggle-btn:hover,
+.history-toggle-btn[aria-expanded="true"] {
+    background: rgba(139, 92, 246, 0.15);
+    border-color: rgba(139, 92, 246, 0.3);
+    color: var(--accent-light);
+}
+
+.history-toggle-btn[aria-expanded="true"]::after {
+    color: var(--accent-light);
+}
+
+/* ── Display ───────────────────────────────────────────────── */
 .display {
-    background: rgba(0, 0, 0, 0.35);
-    padding: 28px 24px 20px;
+    padding: 20px 24px 16px;
     text-align: right;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    min-height: 110px;
+    border-bottom: 1px solid var(--border-subtle);
+    min-height: 118px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    gap: 6px;
+    gap: 4px;
+    position: relative;
 }
 
-/* main number shown on screen */
+.expression-row {
+    min-height: 52px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
 .expression {
-    color: #e0e0e0;
-    font-size: 2rem;
-    font-weight: 600;
-    letter-spacing: 1px;
+    font-family: var(--font-mono);
+    font-size: 2.2rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
     word-break: break-all;
-    line-height: 1.2;
-    min-height: 40px;
-    transition: font-size 0.2s ease;
+    line-height: 1.15;
+    transition: font-size 0.22s var(--ease-out), color 0.2s;
+    user-select: none;
 }
 
-/* small preview result below */
+.result-row {
+    min-height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
 .result {
-    color: rgba(167, 139, 250, 0.75);
+    font-family: var(--font-mono);
     font-size: 1rem;
     font-weight: 400;
-    min-height: 20px;
-    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+    letter-spacing: 0px;
+    transition: opacity 0.2s;
+    user-select: none;
 }
 
-/* button grid layout */
+/* ── Keyboard Hint ─────────────────────────────────────────── */
+.kbd-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 7px 0 0;
+    font-size: 0.62rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    user-select: none;
+}
+
+/* ── Button Grid ───────────────────────────────────────────── */
 .buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    padding: 16px;
-    gap: 10px;
+    padding: 12px 14px 18px;
+    gap: var(--gap);
 }
 
-/* styles shared by all buttons */
+/* ── Base Button ───────────────────────────────────────────── */
 .btn {
     border: none;
     outline: none;
     cursor: pointer;
-    border-radius: 14px;
-    font-family: 'Inter', sans-serif;
-    font-size: 1.2rem;
+    border-radius: var(--radius-btn);
+    font-family: var(--font-ui);
+    font-size: 1.1rem;
     font-weight: 500;
-    height: 64px;
-    transition: all 0.15s ease;
+    height: 68px;
     position: relative;
     overflow: hidden;
-    letter-spacing: 0.5px;
+    letter-spacing: 0px;
+    transition:
+        transform 0.14s var(--ease-snap),
+        box-shadow 0.18s,
+        background 0.18s,
+        border-color 0.18s,
+        color 0.18s;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
 }
 
-/* press effect */
+/* Ripple effect layer */
+.btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at var(--rx, 50%) var(--ry, 50%), rgba(255, 255, 255, 0.18) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+    border-radius: inherit;
+}
+
+.btn.ripple::after {
+    opacity: 1;
+    transition: opacity 0s;
+}
+
+.btn:focus-visible {
+    outline: 2px solid var(--accent-mid);
+    outline-offset: 2px;
+}
+
 .btn:active {
-    transform: scale(0.93);
+    transform: scale(0.91);
 }
 
-/* number buttons */
+/* ── Number Buttons ────────────────────────────────────────── */
 .btn-number {
-    background: rgba(255, 255, 255, 0.08);
-    color: #f0f0f0;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: var(--surface-2);
+    color: var(--text-primary);
+    border: 1px solid var(--border-subtle);
+    font-size: 1.15rem;
+    font-weight: 500;
 }
 
 .btn-number:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.12);
-    color: #ffffff;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    background: var(--surface-3);
+    border-color: var(--border-mid);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-btn-hover);
 }
 
-/* operator buttons */
+/* ── Operator Buttons ──────────────────────────────────────── */
 .btn-operator {
-    background: rgba(139, 92, 246, 0.2);
-    color: #a78bfa;
-    border: 1px solid rgba(139, 92, 246, 0.3);
-    font-size: 1.3rem;
+    background: rgba(124, 58, 237, 0.12);
+    color: var(--accent-light);
+    border: 1px solid rgba(124, 58, 237, 0.22);
+    font-size: 1.25rem;
+    font-weight: 600;
 }
 
 .btn-operator:hover {
-    background: rgba(139, 92, 246, 0.35);
+    background: rgba(124, 58, 237, 0.24);
     color: #c4b5fd;
-    border-color: rgba(139, 92, 246, 0.5);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(139, 92, 246, 0.3);
+    border-color: rgba(124, 58, 237, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(124, 58, 237, 0.25);
 }
 
-/* AC and C buttons */
+.btn-operator.active-op {
+    background: rgba(124, 58, 237, 0.3);
+    color: #c4b5fd;
+    border-color: rgba(139, 92, 246, 0.55);
+    box-shadow: 0 0 14px rgba(124, 58, 237, 0.3);
+}
+
+/* ── Utility Buttons (AC, %) ───────────────────────────────── */
 .btn-utility {
-    background: rgba(239, 68, 68, 0.15);
-    color: #f87171;
-    border: 1px solid rgba(239, 68, 68, 0.25);
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--red-soft);
+    border: 1px solid rgba(239, 68, 68, 0.18);
     font-size: 1rem;
     font-weight: 600;
 }
 
 .btn-utility:hover {
-    background: rgba(239, 68, 68, 0.28);
+    background: rgba(239, 68, 68, 0.2);
     color: #fca5a5;
-    border-color: rgba(239, 68, 68, 0.45);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.25);
+    border-color: rgba(239, 68, 68, 0.38);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px var(--red-glow);
 }
 
-/* equals button */
+/* ── Equals Button ─────────────────────────────────────────── */
 .btn-equals {
-    background: linear-gradient(135deg, #7c3aed, #5b21b6);
+    background: linear-gradient(145deg, #7c3aed 0%, #5b21b6 100%);
     color: #ffffff;
-    border: 1px solid rgba(124, 58, 237, 0.4);
+    border: 1px solid rgba(139, 92, 246, 0.35);
     font-size: 1.4rem;
     font-weight: 700;
-    box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+    box-shadow:
+        0 4px 20px rgba(124, 58, 237, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .btn-equals:hover {
-    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.5);
+    background: linear-gradient(145deg, #8b5cf6 0%, #6d28d9 100%);
+    transform: translateY(-3px);
+    box-shadow:
+        0 10px 30px rgba(124, 58, 237, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .btn-equals:active {
-    transform: scale(0.93);
-    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.4);
+    transform: scale(0.92);
+    box-shadow: 0 2px 10px rgba(124, 58, 237, 0.4);
 }
 
-/* makes a button take 2 columns */
+/* ── Span Two ──────────────────────────────────────────────── */
 .span-two {
     grid-column: span 2;
 }
 
-/* shake animation when an error happens */
+/* Sign button has longer label text */
+#btn-sign {
+    font-size: 0.88rem;
+    letter-spacing: -0.5px;
+}
+
+/* ── Error State ───────────────────────────────────────────── */
 @keyframes shake {
 
     0%,
@@ -182,45 +591,89 @@ body {
         transform: translateX(0);
     }
 
-    20% {
-        transform: translateX(-6px);
+    16% {
+        transform: translateX(-8px);
     }
 
-    40% {
-        transform: translateX(6px);
+    33% {
+        transform: translateX(8px);
     }
 
-    60% {
-        transform: translateX(-4px);
+    50% {
+        transform: translateX(-5px);
     }
 
-    80% {
-        transform: translateX(4px);
+    67% {
+        transform: translateX(5px);
+    }
+
+    84% {
+        transform: translateX(-2px);
     }
 }
 
 .display.error {
-    animation: shake 0.4s ease;
+    animation: shake 0.45s var(--ease-out);
 }
 
 .display.error .expression {
-    color: #f87171;
+    color: var(--red-soft);
 }
 
-/* on really small screens */
-@media (max-width: 380px) {
-    .calculator {
+/* ── Result Pulse (on = press) ─────────────────────────────── */
+@keyframes resultPulse {
+    0% {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.expression.answer-in {
+    animation: resultPulse 0.25s var(--ease-out) both;
+}
+
+/* ── History Item Glow-click ───────────────────────────────── */
+.history-item:active {
+    transform: scale(0.97);
+}
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 640px) {
+    .app-shell {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .history-panel {
         width: 100%;
-        border-radius: 0;
+        max-width: 352px;
+        max-height: 200px;
+        transform: translateY(-12px) scale(0.97);
+    }
+
+    .history-panel.visible {
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (max-width: 400px) {
+    .calculator-card {
+        width: 100%;
+        border-radius: 20px;
     }
 
     .btn {
-        height: 58px;
-        font-size: 1.1rem;
-        border-radius: 10px;
+        height: 60px;
+        font-size: 1rem;
+        border-radius: 12px;
     }
 
     .expression {
-        font-size: 1.7rem;
+        font-size: 1.8rem;
     }
 }
